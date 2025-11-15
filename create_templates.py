@@ -152,7 +152,7 @@ def create_invoice(document_fields : dict , company_fields : dict, FILE_DIR : st
         #add part for the 
         
         file.write(f"|  |  | **Subtotal** | \\$ {subtotal} | \n")
-        file.write(f"|  |  | **Sales Tax** ({TAX_RATE}\\% )  | \\$ {tax_amount} | \n")
+        file.write(f"|  |  | **Sales Tax** ({TAX_RATE*100}\\% )  | \\$ {tax_amount} | \n")
         file.write(f"|  |  | **Total** | \\$ {total_with_tax} | \n")
         
         file.write("\n  \n")
@@ -250,7 +250,7 @@ def create_estimate(document_fields : dict , company_fields : dict, FILE_DIR : s
         #add part for the 
         
         file.write(f"|  |  | **Subtotal** | \\$ {subtotal} | \n")
-        file.write(f"|  |  | **Sales Tax** ({TAX_RATE}\\% )  | \\$ {tax_amount} | \n")
+        file.write(f"|  |  | **Sales Tax** ({TAX_RATE*100}\\% )  | \\$ {tax_amount} | \n")
         file.write(f"|  |  | **Total** | \\$ {total_with_tax} | \n")
         
         #Estimate Number and Date 

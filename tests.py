@@ -92,6 +92,11 @@ main()
 #not sure how i will do this atm
 def doc_creation_tests(document_fields : dict , company_fields : dict, FILE_DIR : str):
     
+    # your workflow and access some kiind of webhook here
+    
+    #await the process being completed, and i can take it in
+    #and extract whatever data
+    
     
     
     create_invoice(document_fields , company_fields  , FILE_DIR)
