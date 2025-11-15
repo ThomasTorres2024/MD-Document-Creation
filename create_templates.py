@@ -1,6 +1,6 @@
 from datetime import date 
 
-
+import os 
 
 
 #Incoming JSON String Format 
@@ -13,6 +13,12 @@ from datetime import date
 #       quantity - quantity
 #       unit price - unity price
 #       total - total
+#
+#   client info
+#     -name 
+#     -address 
+#     -email 
+#
 # subtotal - subtotal  
 # tax - tax 
 # total 
@@ -34,27 +40,81 @@ from datetime import date
 
 #when done render it nicely as a pdf at the end 
 
-def create_doc():
+#Company Fields 
+#   company name - str : address
+#   company email - str : email 
+#   company phone number - str : phone
+
+def get_translation(invoice : str, table_info_to_translate : dict):
+        pass 
+
+def create_invoice(document_fields : dict , company_fields : dict, FILE_DIR : str,):
+
+    client_fields=document_fields['client_info']
+    
+    #initializing fields here for readability 
+    COMPANY_NAME = company_fields['name']
+    COMPANY_ADDRESS = company_fields['address']
+    COMPANY_PHONE_NUM = company_fields['phone']
+    COMPANY_EMAIL = company_fields['email']
+
+    #initializing fields here for readability 
+    CLIENT_NAME = client_fields['name']
+    CLIENT_ADDRESS = client_fields['address']
+    CLIENT_PHONE_NUM = client_fields['phone']
+    CLIENT_EMAIL = company_fields['email']
+    
+    #DOCUMENT_FIELDS 
+    ESTIMATE_NUMBER = document_fields['estimate_number']
+    ESTIMATE_NUMBER = document_fields['date']
+
+    with open(FILE_DIR,'w') as file:
+      
+        #top most part 
+        file.write(f"# {COMPANY_NAME} - Estimate\n\n")
+        file.write(f"### Description  \n")
+
+        #company info 
+        file.write(f"### Description  \n")    
+        
+        file.write(f"$\textbf{{From}}$: {COMPANY_NAME}  \n")
+        file.write(f"{COMPANY_ADDRESS}   \n")
+        file.write(f"{CLIENT_ADDRESS}  \n")
+        file.write(f"{COMPANY_EMAIL}  \n")
+        file.write(f"{COMPANY_PHONE_NUM}  \n")
+    
+def create_estimate(document_fields : dict , company_fields : dict, user_fields :dict, FILE_DIR : str,):
     pass 
 
-def get_translated_document(fields : dict):
+def create_doc(document_fields : dict , company_fields : dict, user_fields :dict, FILE_DIR : str, doc_type : str) -> bool: 
+
+    doc_created : bool =False 
+
+    if(doc_type=="invoice"):
+      doc_created=output_dir=create_invoice()
+    elif(doc_type=="estimate"):
+      doc_created=output_dir=create_estimate()
+
+    return doc_created
+
+def get_translated_document(docment_fields : dict):
     
-    
+
     #get default info from user ID 
-    UID : int = fields['UID']
+    UID : int = docment_fields['UID']
     print(UID)
     #initialize all fields for readability 
     
     #generate doc number for company 
     
-    provided_date =fields['date']
+    provided_date =docment_fields['date']
     print(provided_date)
     
     #translate all translateable fields 
     #list of different descriptions for different asks
-    descriptions : list[dict:[str]]=fields['descriptions']
-    tax_rate = float(fields['tax_rate'])
-    destination_language  = fields['dest_lang']
+    descriptions : list[dict:[str]]=docment_fields['descriptions']
+    tax_rate = float(docment_fields['tax_rate'])
+    destination_language  = docment_fields['dest_lang']
     
     
     #await translations 
@@ -71,28 +131,8 @@ def get_translated_document(fields : dict):
     
 
 
-field1= {
-  'UID':67,
-  'date':date.today(),
-  'descriptions':[
-        { 'desc':"job1 description", 'quantity':1, 'unit_price':10,},
-        { 'desc':"job2 description", 'quantity':2, 'unit_price':20,},
-        { 'desc':"job3 description", 'quantity':3, 'unit_price':30,},
-    ],
-  'tax_rate':0.67,
-  'dest_lang':'eng'
-  }
 
-field2= {
-  'UID':41,
-  'date':date.today(),
-  'descriptions':[
-        { 'desc':"job1 description", 'quantity':1, 'unit_price':10,},
-        { 'desc':"job2 description", 'quantity':2, 'unit_price':20,},
-        { 'desc':"job3 description", 'quantity':3, 'unit_price':30,},
-    ],
-  'tax_rate':0.1,
-  'dest_lang':'eng'
-  }
+#translate for doc part test
+#get_translated_document(user_field1)
 
-get_translated_document(field1)
+#create_doc()
